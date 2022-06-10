@@ -1,10 +1,13 @@
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 // 테스트 코드 작성 x
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 public class TimeZoneConverterTest {
     private TimeZoneConverter converter;
@@ -21,16 +24,16 @@ public class TimeZoneConverterTest {
 
     @Test
     public void getConverterInstance() {
-        assertNotNull(converter);
+        assertThat(converter).isNotNull();
     }
 
     @Test
     public void setTime() {
         this.converter.setTime("2022/06/08/00:30");
-        assertEquals(2022, this.converter.getYear());
-        assertEquals(6, this.converter.getMonth());
-        assertEquals(8, this.converter.getDay());
-        assertEquals(0, this.converter.getHour());
-        assertEquals(30, this.converter.getMin());
+        assertThat(2022).isEqualTo(converter.getYear());
+        assertThat(6).isEqualTo(converter.getMonth());
+        assertThat(8).isEqualTo(converter.getDay());
+        assertThat(0).isEqualTo(converter.getHour());
+        assertThat(30).isEqualTo(converter.getMin());
     }
 }
