@@ -30,6 +30,53 @@ public class TimeZoneConverter {
         if ("브라질".equals(str))  {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
+            int[] days = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            int cvtYear = 0;
+            int cvtMonth = 0; 
+            int cvtDay = 0;
+            int cvtHour = 0; 
+            int cvtMin = 0;
+            
+            cvtHour = this.hour - 12;
+
+            boolean isLateOneDay = (cvtHour < 0);
+
+            boolean isBeginingOfMonth = (this.day == 1);
+
+            boolean isJanuary = (this.month == 1);
+
+            if(isLateOneDay) { 
+                cvtHour = cvtHour + 24;
+                if(!isBeginingOfMonth) {  
+                    cvtYear = this.year;
+                    cvtMonth = this.month;
+                    cvtDay = this.day - 1;
+                    cvtMin = this.min;
+                } else if(isBeginingOfMonth && !isJanuary) { 
+                    cvtYear = this.year;
+                    cvtMonth = this.month - 1;
+                    cvtDay = days[this.month - 1];
+                    cvtMin = this.min;
+                } else if(isBeginingOfMonth && isJanuary) { 
+                    cvtYear = this.year - 1;
+                    cvtMonth = 12;
+                    cvtDay = days[12];
+                    cvtMin = this.min;
+                }
+            } else {
+                cvtYear = this.year;
+                cvtMonth = this.month;
+                cvtDay = this.day;
+                cvtMin = this.min;
+            }
+
+            String strTime = this.getFormattedTime(cvtYear, cvtMonth, cvtDay, cvtHour, cvtMin);
+            System.out.println("브라질: " + strTime);
+        }
+
+
+
+
         } else if ("영국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
