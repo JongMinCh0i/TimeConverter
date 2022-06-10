@@ -1,3 +1,5 @@
+import java.util.GregorianCalendar;
+
 public class summerTimeCalculator {
     String country;
     int startSundayNumberLimit;
@@ -39,11 +41,8 @@ public class summerTimeCalculator {
         }
     }
 
-    private boolean isLeapYear(int year) {
-        return (year % 400) == 0 ? true : ((year % 100 == 0) ? false : ((year % 4 == 0) ? true : false));
-    }
-
     private int getSpecificSunday(int year, int summerTimeMonth, int limit) {
+        GregorianCalendar gc = new GregorianCalendar();
         boolean isRepeatNumber = (limit > 0);
         int counter = 0;
         int specificSunday = 0;
@@ -51,7 +50,7 @@ public class summerTimeCalculator {
         int[] daysOfMonth = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
         for (int i = 1; i < year; i++) {
-            if (this.isLeapYear(i)) {
+            if (gc.isLeapYear(year)) {
                 totalDays += 366;
             } else {
                 totalDays += 365;
@@ -122,8 +121,8 @@ public class summerTimeCalculator {
         stc.setValue("프랑스");
         System.out.println(stc.isSummerTimePeriod(2021, 3, 27, 00, 00));
         stc.setValue("영국");
-        System.out.println(stc.isSummerTimePeriod(2021, 3, 28, 1, 59));
+        System.out.println(stc.isSummerTimePeriod(2021, 3, 28, 0, 59));
         stc.setValue("미국");
-        System.out.println(stc.isSummerTimePeriod(2023, 11, 5, 1, 59));
+        System.out.println(stc.isSummerTimePeriod(2023, 11, 5, 2, 00));
     }
 }
