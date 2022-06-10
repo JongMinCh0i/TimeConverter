@@ -2,6 +2,7 @@ import lombok.Getter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.GregorianCalendar;
 
 @Getter
 public class TimeZoneConverter {
@@ -62,6 +63,7 @@ public class TimeZoneConverter {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         } else if ("프랑스".equals(str)) {
+            GregorianCalendar gc = new GregorianCalendar();
             int[] days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             int convertedYear = 0;
             int convertedMonth = 0;
@@ -84,8 +86,12 @@ public class TimeZoneConverter {
             // n월 1일에서 하루가 늦으면 n-1월의 마지막 일로 가야함.
             boolean isBeginingOfMonth = (this.day == 1);
 
+            // n월 1일 중 3월 1일은 윤년 여부에 따라 일수를 구분해야함.
+            boolean isLeapYearAndMarchFirst = (gc.isLeapYear(this.year) && this.month == 3);
+
             // 1월 1일인 경우 특별히 전년도 12월의 마지막 일로 가야함.
             boolean isJanuary = (this.month == 1);
+
 
             if (isLateOneDay) { // 프랑스가 한국보다 하루 늦는다면
                 convertedHour = convertedHour + 24;
@@ -97,7 +103,10 @@ public class TimeZoneConverter {
                 } else if (isBeginingOfMonth && !isJanuary) { // n월 1일인 경우(1월 제외)
                     convertedYear = this.year;
                     convertedMonth = this.month - 1;
-                    convertedDay = days[this.month - 1];
+                    convertedDay = days[convertedMonth];
+                    if (isLeapYearAndMarchFirst) { // 윤년이고 3월 1일인 경우, 일수를 29일로 설정.
+                        convertedDay = convertedDay + 1;
+                    }
                     convertedMin = this.min;
                 } else if (isBeginingOfMonth && isJanuary) { // 1월 1일인 경우
                     convertedYear = this.year - 1;
@@ -124,7 +133,7 @@ public class TimeZoneConverter {
 
     public static void main(String[] args) {
         TimeZoneConverter t = new TimeZoneConverter();
-        t.setTime("2022/06/11/03:27");
+        t.setTime("2020/03/01/00:00");
         t.printOtherCountry("프랑스");
         /*
          * t.setTime(); : 시간 설정
