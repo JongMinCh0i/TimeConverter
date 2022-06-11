@@ -26,35 +26,30 @@ public class TimeZoneConverter {
         }
     }
 
-    public void printOtherCountry(String str) {
-        if ("브라질".equals(str))  {
+    public String printOtherCountry(String str) {
+        if ("브라질".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         } else if ("영국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
-        }
-        else if ("터키".equals(str)) {
+        } else if ("터키".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
-        }
-        else if ("프랑스".equals(str)) {
+        } else if ("프랑스".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         } else if ("미국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         }
+
+
+        return "you must set Time";
     }
 
     public static void main(String[] args) {
         TimeZoneConverter t = new TimeZoneConverter();
-/*
-        t.setTime(); : 시간 설정
-
-        t.printOtherCountry();
-        ex ) @Param  str = "영국"  영국의 시간 출력
-         t.printOtherCountry(영국);
-*/
+        t.setTime("2022/06/11/13:10");
     }
 }
