@@ -66,10 +66,25 @@ public class TimeZoneConverterTest {
         converter.setTime("2022/06/11/13:10");
         converter.printOtherCountry("프랑스");
 
+        // when
         String franceTime = converter.printOtherCountry("프랑스");
 
         // then
         Assertions.assertThat(franceTime).isEqualTo("2022/06/11/06:10");
+
+    }
+
+    @Test
+    public void timeToBrazil() {
+        // given
+        converter.setTime("2022/06/11/13:10");
+        converter.printOtherCountry("브라질");
+
+        // when
+        String brazilTime = converter.printOtherCountry("브라질");
+
+        // then
+        Assertions.assertThat(brazilTime).isEqualTo("2022/06/11/01:10");
 
     }
 }
