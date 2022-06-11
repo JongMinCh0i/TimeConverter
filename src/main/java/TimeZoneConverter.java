@@ -54,8 +54,6 @@ public class TimeZoneConverter {
 
     public String printOtherCountry(String str) {
         if ("브라질".equals(str)) {
-            // 개인처리 내부 메서드 구현
-            // 브런치 이름은 개인별 이니셜로 구현
         } else if ("영국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
@@ -67,7 +65,7 @@ public class TimeZoneConverter {
             int t_day = getDay();
             int t_hour = getHour() - 6;
             String turkeyTime = " ";
-          
+
             if(getHour() < 6){
                 t_hour = 24 + t_hour;
                 if(getDay() == 1){
@@ -101,11 +99,11 @@ public class TimeZoneConverter {
                 }
             }
 
-            turkeyTime = "Turkey :" + t_year + "-" + t_month + "-" + t_day + "," + t_hour + ":" + getMin();
+            turkeyTime = "Turkey: " + t_year + "-" + t_month + "-" + t_day + "," + t_hour + ":" + getMin();
 
-            System.out.println("Input :" + getYear() + "-" + getMonth() + "-" + getDay() + "," + getHour() + ":" + getMin());
+            System.out.println("Input: " + getYear() + "-" + getMonth() + "-" + getDay() + "," + getHour() + ":" + getMin());
             System.out.println(turkeyTime);
-          
+
             return turkeyTime;
        
         } else if ("프랑스".equals(str)) {
@@ -167,10 +165,10 @@ public class TimeZoneConverter {
                 convertedMin = this.min;
             }
 
-            String strTime = this.getFormattedTime(convertedYear, convertedMonth, convertedDay, convertedHour,
-                    convertedMin);
-            System.out.println("프랑스: " + strTime);
+            String franceTime = this.getFormattedTime(convertedYear, convertedMonth, convertedDay, convertedHour, convertedMin);
+            System.out.println("France: " + franceTime);
 
+            return franceTime;
         } else if ("미국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
