@@ -57,7 +57,19 @@ public class TimeZoneConverterTest {
         String turkeyTime = converter.printOtherCountry("터키");
 
         // then
-        Assertions.assertThat(turkeyTime).isEqualTo("Turkey :2022-6-11,7:10");
+        Assertions.assertThat(turkeyTime).isEqualTo("Turkey: 2022-6-11,7:10");
+    }
+
+    @Test
+    public void timeToFrance() {
+        // given
+        converter.setTime("2022/06/11/13:10");
+        converter.printOtherCountry("프랑스");
+
+        String franceTime = converter.printOtherCountry("프랑스");
+
+        // then
+        Assertions.assertThat(franceTime).isEqualTo("2022/06/11/06:10");
 
     }
 }
