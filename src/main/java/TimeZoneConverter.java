@@ -26,22 +26,22 @@ public class TimeZoneConverter {
         }
     }
 
-    public void printOtherCountry(String str) {
-        if ("브라질".equals(str))  {
+    public String printOtherCountry(String str) {
+        if ("브라질".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         } else if ("영국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
-        }
-        else if ("터키".equals(str)) {
+        } else if ("터키".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
             int t_year = getYear();
             int t_month = getMonth();
             int t_day = getDay();
             int t_hour = getHour() - 6;
-
+            String turkeyTime = " ";
+          
             if(getHour() < 6){
                 t_hour = 24 + t_hour;
                 if(getDay() == 1){
@@ -75,8 +75,12 @@ public class TimeZoneConverter {
                 }
             }
 
-            System.out.println("Input :"+ getYear() + "-" + getMonth() + "-" + getDay() + "," + getHour()  + ":" + getMin());
-            System.out.println("Turkey :" + t_year + "-" + t_month + "-" + t_day + "," + t_hour + ":" + getMin());
+            turkeyTime = "Turkey :" + t_year + "-" + t_month + "-" + t_day + "," + t_hour + ":" + getMin();
+
+            System.out.println("Input :" + getYear() + "-" + getMonth() + "-" + getDay() + "," + getHour() + ":" + getMin());
+            System.out.println(turkeyTime);
+          
+            return turkeyTime;
         }
         else if ("프랑스".equals(str)) {
             // 개인처리 내부 메서드 구현
@@ -85,16 +89,14 @@ public class TimeZoneConverter {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         }
+
+
+        return "you must set Time";
     }
 
     public static void main(String[] args) {
         TimeZoneConverter t = new TimeZoneConverter();
-/*
-        t.setTime(); : 시간 설정
-
-        t.printOtherCountry();
-        ex ) @Param  str = "영국"  영국의 시간 출력
-         t.printOtherCountry(영국);
-*/
+        t.setTime("2022/06/11/13:10");
+        t.printOtherCountry("터키");
     }
 }

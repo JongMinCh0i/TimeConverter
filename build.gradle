@@ -24,7 +24,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
     //  assertj,
-    // Doc https://assertj.github.io/doc/#assertj
+    //  Doc https://assertj.github.io/doc/#assertj
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
 
     implementation 'junit:junit:4.13.1'
