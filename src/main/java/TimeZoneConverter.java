@@ -29,7 +29,7 @@ public class TimeZoneConverter {
 
     /**
      * int type의 년, 월, 일, 시, 분을 받아 문자열로 변환 후 정리해 반환합니다.
-     * 
+     *
      * @param year  출력할 연도
      * @param month 출력할 월
      * @param day   출력할 일
@@ -38,7 +38,7 @@ public class TimeZoneConverter {
      * @return YYYY/MM/DD/HH:MM 형식의 시간을 String으로 반환합니다.
      */
     public String getFormattedTime(int year, int month, int day, int hour,
-            int min) {
+                                   int min) {
         String strTime = null;
 
         String strYear = Integer.toString(year);
@@ -53,7 +53,54 @@ public class TimeZoneConverter {
     }
 
     public String printOtherCountry(String str) {
-        if ("브라질".equals(str)) {
+        if ("브라질".equals(str))  {
+            // 개인처리 내부 메서드 구현
+            // 브런치 이름은 개인별 이니셜로 구현
+            int[] days = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            int cvtYear = 0;
+            int cvtMonth = 0;
+            int cvtDay = 0;
+            int cvtHour = 0;
+            int cvtMin = 0;
+
+            cvtHour = this.hour - 12;
+
+            boolean isLateOneDay = (cvtHour < 0);
+
+            boolean isBeginingOfMonth = (this.day == 1);
+
+            boolean isJanuary = (this.month == 1);
+
+            if(isLateOneDay) {
+                cvtHour = cvtHour + 24;
+                if(!isBeginingOfMonth) {
+                    cvtYear = this.year;
+                    cvtMonth = this.month;
+                    cvtDay = this.day - 1;
+                    cvtMin = this.min;
+                } else if(isBeginingOfMonth && !isJanuary) {
+                    cvtYear = this.year;
+                    cvtMonth = this.month - 1;
+                    cvtDay = days[this.month - 1];
+                    cvtMin = this.min;
+                } else if(isBeginingOfMonth && isJanuary) {
+                    cvtYear = this.year - 1;
+                    cvtMonth = 12;
+                    cvtDay = days[12];
+                    cvtMin = this.min;
+                }
+            } else {
+                cvtYear = this.year;
+                cvtMonth = this.month;
+                cvtDay = this.day;
+                cvtMin = this.min;
+            }
+
+            String brazilTime = this.getFormattedTime(cvtYear, cvtMonth, cvtDay, cvtHour, cvtMin);
+            System.out.println("Brazil: " + brazilTime);
+
+            return brazilTime;
+
         } else if ("영국".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
@@ -105,7 +152,7 @@ public class TimeZoneConverter {
             System.out.println(turkeyTime);
 
             return turkeyTime;
-       
+
         } else if ("프랑스".equals(str)) {
             GregorianCalendar gc = new GregorianCalendar();
             int[] days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -176,18 +223,19 @@ public class TimeZoneConverter {
 
         return "you must set Time";
     }
-       /*
-         * t.setTime(); : 시간 설정
-         * 
-         * t.printOtherCountry();
-         * ex ) @Param str = "영국" 영국의 시간 출력
-         * t.printOtherCountry(영국);
-         */
+    /*
+     * t.setTime(); : 시간 설정
+     *
+     * t.printOtherCountry();
+     * ex ) @Param str = "영국" 영국의 시간 출력
+     * t.printOtherCountry(영국);
+     */
     public static void main(String[] args) {
         TimeZoneConverter t = new TimeZoneConverter();
- 
+
         t.setTime("2022/06/11/13:10");
         t.printOtherCountry("터키");
         t.printOtherCountry("프랑스");
+        t.printOtherCountry("브라질");
     }
 }
