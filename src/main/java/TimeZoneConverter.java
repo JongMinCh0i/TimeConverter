@@ -52,7 +52,7 @@ public class TimeZoneConverter {
         return strTime;
     }
 
-    public void printOtherCountry(String str) {
+    public String printOtherCountry(String str) {
         if ("브라질".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
@@ -62,6 +62,52 @@ public class TimeZoneConverter {
         } else if ("터키".equals(str)) {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
+            int t_year = getYear();
+            int t_month = getMonth();
+            int t_day = getDay();
+            int t_hour = getHour() - 6;
+            String turkeyTime = " ";
+          
+            if(getHour() < 6){
+                t_hour = 24 + t_hour;
+                if(getDay() == 1){
+                    if (t_month == 2 || t_month == 4 || t_month == 6 || t_month == 9 || t_month == 11) {
+                        t_day = 31;
+                        t_month = t_month - 1;
+                    } else if (t_month == 5 || t_month == 7 || t_month == 8 || t_month == 10 || t_month == 12) {
+                        t_day = 30;
+                        t_month = t_month - 1;
+                    } else if (t_month == 1) {
+                        t_day = 31;
+                        t_month = 12;
+                        t_year = t_year - 1;
+                    } else if(t_month == 3) {
+                        t_day = 28;
+                        t_month = t_month - 1;
+                    }
+                }
+                else if((t_month == 1 || t_month == 3 || t_month == 5 || t_month == 7 || t_month == 8 || t_month == 10 || t_month == 12) && (t_day > 31 || t_day < 1)){
+                    System.out.println("날짜 입력 오류 !! \n입력 월의 날짜는 1~31까지있습니다.");
+                }
+                else if((t_month == 4 || t_month == 6 || t_month == 9 || t_month == 11) && (t_day > 30 || t_day < 1)){
+                    System.out.println("날짜 입력 오류 !! \n입력 월의 날짜는 1~30까지있습니다.");
+
+                }
+                else if(t_month == 2 && (t_day > 28 || t_day < 1)){
+                    System.out.println("날짜 입력 오류 !! \n입력 월의 날짜는 1~28까지있습니다.");
+                }
+                else{
+                    t_day = t_day - 1;
+                }
+            }
+
+            turkeyTime = "Turkey :" + t_year + "-" + t_month + "-" + t_day + "," + t_hour + ":" + getMin();
+
+            System.out.println("Input :" + getYear() + "-" + getMonth() + "-" + getDay() + "," + getHour() + ":" + getMin());
+            System.out.println(turkeyTime);
+          
+            return turkeyTime;
+       
         } else if ("프랑스".equals(str)) {
             GregorianCalendar gc = new GregorianCalendar();
             int[] days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -129,18 +175,21 @@ public class TimeZoneConverter {
             // 개인처리 내부 메서드 구현
             // 브런치 이름은 개인별 이니셜로 구현
         }
-    }
 
-    public static void main(String[] args) {
-        TimeZoneConverter t = new TimeZoneConverter();
-        t.setTime("2020/03/01/00:00");
-        t.printOtherCountry("프랑스");
-        /*
+        return "you must set Time";
+    }
+       /*
          * t.setTime(); : 시간 설정
          * 
          * t.printOtherCountry();
          * ex ) @Param str = "영국" 영국의 시간 출력
          * t.printOtherCountry(영국);
          */
+    public static void main(String[] args) {
+        TimeZoneConverter t = new TimeZoneConverter();
+ 
+        t.setTime("2022/06/11/13:10");
+        t.printOtherCountry("터키");
+        t.printOtherCountry("프랑스");
     }
 }

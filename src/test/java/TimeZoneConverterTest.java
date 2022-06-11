@@ -1,8 +1,10 @@
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 // 테스트 코드 작성 x
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -21,16 +23,41 @@ public class TimeZoneConverterTest {
 
     @Test
     public void getConverterInstance() {
-        assertNotNull(converter);
+        assertThat(converter).isNotNull();
     }
 
     @Test
-    public void setTime() {
-        this.converter.setTime("2022/06/08/00:30");
-        assertEquals(2022, this.converter.getYear());
-        assertEquals(6, this.converter.getMonth());
-        assertEquals(8, this.converter.getDay());
-        assertEquals(0, this.converter.getHour());
-        assertEquals(30, this.converter.getMin());
+    public void setTimeTest() {
+
+        // given
+        converter.setTime("2022/06/11/13:10");
+
+        // when
+        int korYear = converter.getYear();
+        int korMonth = converter.getMonth();
+        int korDay = converter.getDay();
+        int korHour = converter.getHour();
+        int korMin = converter.getMin();
+
+        // then
+        assertThat(korYear).isEqualTo(2022);
+        assertThat(korMonth).isEqualTo(6);
+        assertThat(korDay).isEqualTo(11);
+        assertThat(korHour).isEqualTo(13);
+        assertThat(korMin).isEqualTo(10);
+    }
+
+    @Test
+    public void timeToTurkey() {
+        // given
+        converter.setTime("2022/06/11/13:10");
+        converter.printOtherCountry("터키");
+
+        // when
+        String turkeyTime = converter.printOtherCountry("터키");
+
+        // then
+        Assertions.assertThat(turkeyTime).isEqualTo("Turkey :2022-6-11,7:10");
+
     }
 }
