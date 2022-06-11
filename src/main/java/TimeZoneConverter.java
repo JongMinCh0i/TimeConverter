@@ -217,9 +217,53 @@ public class TimeZoneConverter {
 
             return franceTime;
         } else if ("미국".equals(str)) {
-            // 개인처리 내부 메서드 구현
-            // 브런치 이름은 개인별 이니셜로 구현
+   
+    int[] days = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    // 1월부터 12월
+
+    int UsaYear = 0;
+    int UsaMonth = 0; 
+    int UsaDay = 0;
+    int UsaHour = 0; 
+    int UsaMin = 0;
+    UsaHour = this.hour - 13;
+    // 미국시차 -13시간
+
+    boolean isLateOneDay = (UsaHour < 0);
+    //n월 1일에서 하루가 늦으면 n-1월의 마지막 일로 가야함.
+
+    boolean isBeginingOfMonth = (this.day == 1);
+    // 1월 1일인 경우 특별히 전년도 12월의 마지막 일로 가야함.
+
+    boolean isJanuary = (this.month == 1);
+    if(isLateOneDay) { // 미국이 한국보다 하루 늦는다면
+        UsaHour = UsaHour + 24;
+        if(!isBeginingOfMonth) {  // n월 1일이 아니면 해당 값으로 설정.
+            UsaYear = this.year;
+            UsaMonth = this.month;
+            UsaDay = this.day - 1;
+            UsaMin = this.min;
+        } else if(isBeginingOfMonth && !isJanuary) { // n월 1일인 경우(1월 제외)
+            UsaYear = this.year;
+            UsaMonth = this.month - 1;
+            UsaDay = days[this.month - 1];
+            UsaMin = this.min;
+        } else if(isBeginingOfMonth && isJanuary) { // 1월 1일인 경우
+            UsaYear = this.year - 1;
+            UsaMonth = 12;
+            UsaDay = days[12];
+            UsaMin = this.min;
         }
+    } else { // 미국이 한국과 동일한 일이라면,
+        UsaYear = this.year;
+        UsaMonth = this.month;
+        UsaDay = this.day;
+        UsaMin = this.min;
+    }
+    String strTime = this.getFormattedTime(UsaYear, UsaMonth, UsaDay, UsaHour, UsaMin);
+    System.out.println("미국: " + strTime);
+}
+
 
         return "you must set Time";
     }
@@ -237,5 +281,6 @@ public class TimeZoneConverter {
         t.printOtherCountry("터키");
         t.printOtherCountry("프랑스");
         t.printOtherCountry("브라질");
+        t.printOtherCountry("미국");
     }
 }
